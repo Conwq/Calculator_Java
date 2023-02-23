@@ -1,5 +1,5 @@
-public enum RomanNumerals {
-    I,
+enum RomanNumerals {
+    I(),
     II,
     III,
     IV,

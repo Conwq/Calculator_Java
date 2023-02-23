@@ -1,6 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.*;
 
 public class Calculator {
     private static final Scanner scanner = new Scanner(System.in);
@@ -17,7 +17,7 @@ public class Calculator {
         }
     }
 
-    public void expression(String[] strings) {
+    public void expression(String[] strings) throws Exception{
 
         String firstNumb = strings[0];
         String operator = strings[1];
@@ -29,6 +29,7 @@ public class Calculator {
         catch (Exception e){
             answer = withString(firstNumb, operator, secondNumb);
         }
+        if (answer == null) throw new Exception();
         System.out.println(answer);
     }
 
@@ -61,24 +62,47 @@ public class Calculator {
 
     public String[] enteringValue(String value) throws Exception{
         String[] strings = value.split(" ");
-        checkArrayStrings(strings);
+        try {
+            checkArrayStringsForArabian(strings);
+        }
+        catch (Exception e){
+            checkArrayStringsForRoman(strings);
+        }
         return strings;
     }
 
-    public void checkArrayStrings(String[] strings) throws Exception{
+    public void checkArrayStringsForRoman(String [] strings) throws Exception{
+        if (strings.length != 3) throw new Exception();
+        RomanNumerals [] romanNumerals = RomanNumerals.values();
+        ArrayList<RomanNumerals> arrayList = new ArrayList<>();
+        Collections.addAll(arrayList, romanNumerals);
+        boolean check = true;
+        try {
+             check = arrayList.contains(RomanNumerals.valueOf(strings[0])) &&
+                     arrayList.contains(RomanNumerals.valueOf(strings[2]));
+        }
+        catch (Exception e){
+            throw new Exception();
+        }
+        if (!check) throw new Exception();
+    }
+
+
+
+
+
+
+    public void checkArrayStringsForArabian(String[] strings) throws Exception{
+        if (strings.length != 3) throw new Exception();
         int firstNumb = 0;
         int secondNumb = 0;
         try {
             firstNumb = Integer.parseInt(strings[0]);
             secondNumb = Integer.parseInt(strings[2]);
-        }catch (Exception e){
+        }
+        catch (Exception e){
             throw new Exception();
         }
-
-        if (strings.length != 3 || firstNumb > 10 || secondNumb > 10) {
-            throw new Exception();
-        }
-
+        if (firstNumb > 10 || secondNumb > 10) throw new Exception();
     }
-
 }
