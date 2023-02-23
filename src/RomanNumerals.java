@@ -1,10 +1,11 @@
-enum RomanNumerals {
-    I(),
+public enum RomanNumerals {
+    I,
     II,
     III,
     IV,
     V,
     VI,
+    VII,
     VIII,
     IX,
     X
