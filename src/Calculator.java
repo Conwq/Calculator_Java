@@ -1,5 +1,3 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class Calculator {
@@ -9,7 +7,7 @@ public class Calculator {
         try {
             Calculator calculator = new Calculator(); //создаем объект калькулятор
             String value = scanner.nextLine(); //сохраняем введенную строку в переменную
-            String[] strings = calculator.enteringValue(value); //при помощи метода, разделяем строку на подстроки и при этом проверяем содержимое на соответствие условию и сохраняем результат, если он соответствует, в переменную
+            String[] strings = calculator.splitingStringIntoSubstring(value); //при помощи метода, разделяем строку на подстроки и при этом проверяем содержимое на соответствие условию и сохраняем результат, если он соответствует, в переменную
             calculator.expression(strings); //наше выполнение задачи
         }
         catch (Exception e) {
@@ -32,46 +30,116 @@ public class Calculator {
         System.out.println(answer); //выводим наш ответ в консоль
     }
 
-    public String withString(String firstNum, String operator, String secondNum) {
+    public String withString(String firstNum, String operator, String secondNum) throws Exception{
 
-        int numb1 = numberConversion(firstNum);
-        int numb2 = numberConversion(secondNum);
-        return String.valueOf(numb1 + numb2);
+        int numb1 = RomanNumerals.valueOf(firstNum).getValue();
+        int numb2 = RomanNumerals.valueOf(secondNum).getValue();
+        int result = Integer.parseInt(MathOperation.operation(numb1, operator,numb2));
+        return convertingRomanNumbers(result);
     }
-    public int numberConversion(String number){
-        switch (number){
-            case "I": return 1;
-            case "II": return 2;
-            case "III": return 3;
-            case "IV": return 4;
-            case "V": return 5;
-            case "VI": return 6;
-            case "VII": return 7;
-            case "VIII": return 8;
-            case "IX": return 9;
-            case "X": return 10;
-            default: return 0;
+
+    public String convertingRomanNumbers(int number)throws Exception{
+        String romNumber = numberConversion(number);
+
+        if (number < 0)
+            throw new Exception();
+
+        else if (number > 10 && number < 20)
+            return "X" + romNumber;
+
+        else if (number >= 20 && number < 30){
+            if (romNumber == null)
+                return "XX";
+            else
+                return "XX" + romNumber;
         }
+
+        else if (number >= 30 && number < 40) {
+            if (romNumber == null)
+                return "XXX";
+            else
+                return "XXX" + romNumber;
+        }
+
+        else if (number >= 40 && number < 50) {
+            if (romNumber == null)
+                return "XL";
+            else
+                return "XL" + romNumber;
+        }
+        else if (number >= 50 && number < 60) {
+            if (romNumber == null)
+                return "L";
+            else
+                return "L" + romNumber;
+        }
+        else if (number >= 60 && number < 70) {
+            if (romNumber == null)
+                return "LX";
+            else
+                return "LX" + romNumber;
+        }
+        else if (number >= 70 && number < 80) {
+            if (romNumber == null)
+                return "LXX";
+            else
+                return "LXX" + romNumber;
+        }
+        else if (number >= 80 && number < 90) {
+            if (romNumber == null)
+                return "LXXX";
+            else
+                return "LXXX" + romNumber;
+        }
+        else if (number >= 90 && number < 100) {
+            if (romNumber == null)
+                return "XC";
+            else
+                return "XC" + romNumber;
+        }
+        else if (number == 100)
+            return "C";
+        else
+            return romNumber;
+    }
+    public String numberConversion(int number){
+        if (number == 10)
+            return "X";
+        char [] chars = String.valueOf(number).toCharArray();
+        int x = Integer.parseInt(String.valueOf(chars[chars.length - 1]));
+        return switch (x) {
+            case 1 -> "I";
+            case 2 -> "II";
+            case 3 -> "III";
+            case 4 -> "IV";
+            case 5 -> "V";
+            case 6 -> "VI";
+            case 7 -> "VII";
+            case 8 -> "VIII";
+            case 9 -> "IX";
+            default -> null;
+        };
     }
 
     public String withInt(String firstNum, String operator, String secondNum) {
         int numbOne = Integer.parseInt(firstNum);
         int numbTwo = Integer.parseInt(secondNum);
-        switch (operator) {
-            case "+":
-                return String.valueOf(numbOne + numbTwo);
-            case "-":
-                return String.valueOf(numbOne - numbTwo);
-            case "/":
-                return String.valueOf(numbOne / numbTwo);
-            case "*":
-                return String.valueOf(numbOne * numbTwo);
-            default:
-                return null;
-        }
+        return MathOperation.operation(numbOne, operator, numbTwo);
+//        switch (operator) {
+//            case "+":
+//                return String.valueOf(numbOne + numbTwo);
+//            case "-":
+//                return String.valueOf(numbOne - numbTwo);
+//            case "/":
+//                return String.valueOf(numbOne / numbTwo);
+//            case "*":
+//                return String.valueOf(numbOne * numbTwo);
+//            default:
+//                return null;
+//        }
     }
 
-    public String[] enteringValue(String value) throws Exception{
+    public String[] splitingStringIntoSubstring(String value) throws Exception{
         String[] strings = value.split(" "); //разделяем строку на подстроки
         try {
             checkArrayStringsForArabian(strings); //при помощи метода проверяем являются ли значения арабскими цифрами + соблюдение условия
@@ -115,4 +183,34 @@ public class Calculator {
 
 class MathOperation{
 
+    public static String operation(int firstNumb, String operator, int secondNumb){
+        return switch (operator) {
+            case "+" -> String.valueOf(firstNumb + secondNumb);
+            case "-" -> String.valueOf(firstNumb - secondNumb);
+            case "/" -> String.valueOf(firstNumb / secondNumb);
+            case "*" -> String.valueOf(firstNumb * secondNumb);
+            default -> null;
+        };
+    }
+}
+
+enum RomanNumerals {
+    I(1),
+    II(2),
+    III(3),
+    IV(4),
+    V(5),
+    VI(6),
+    VII(7),
+    VIII(8),
+    IX(9),
+    X(10);
+
+    private final int value;
+    RomanNumerals(int value){
+        this.value = value;
+    }
+    public int getValue(){
+        return value;
+    }
 }
