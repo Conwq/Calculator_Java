@@ -18,7 +18,6 @@ public class Calculator {
     }
 
     public void expression(String[] strings) throws Exception{
-
         String firstNumb = strings[0]; //сохраняем 1-ый операнд в переменную, который ввел пользователь
         String operator = strings[1]; //сохраняем оператор в переменную, который ввел пользователь
         String secondNumb = strings[2]; //сохраняем 2-ой операнд в переменную, который ввел пользователь
@@ -55,7 +54,6 @@ public class Calculator {
         }
     }
 
-
     public String withInt(String firstNum, String operator, String secondNum) {
         int numbOne = Integer.parseInt(firstNum);
         int numbTwo = Integer.parseInt(secondNum);
@@ -72,10 +70,6 @@ public class Calculator {
                 return null;
         }
     }
-
-
-
-
 
     public String[] enteringValue(String value) throws Exception{
         String[] strings = value.split(" "); //разделяем строку на подстроки
@@ -104,11 +98,6 @@ public class Calculator {
         //if (!check) throw new Exception(); //если значение false, то выкидываем исключение
     }
 
-
-
-
-
-
     public void checkArrayStringsForArabian(String[] strings) throws Exception{
         if (strings.length != 3) throw new Exception(); //если длинна массива не равна 3 (по условию у нас должно быть 2 операнда и 1 оператор), то выкидываем исключение и возвращаемся в метод, который вызвал этот метод
         int firstNumb = 0; //резервируем переменную в памяти
@@ -122,4 +111,8 @@ public class Calculator {
         }
         if (firstNumb > 10 || secondNumb > 10) throw new Exception(); //если в данном методе операции прошли успешно, в завершение проверяем наше условие по заданию, если не проходит, то выкидываем исключение и возвращаемся к методу, который вызвал этот метод
     }
+}
+
+class MathOperation{
+
 }
