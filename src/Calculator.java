@@ -6,11 +6,15 @@ public class Calculator {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Calculator calculator = new Calculator();
-        String value = scanner.nextLine();
-        String[] strings = calculator.enteringValue(value);
-        calculator.expression(strings);
-
+        try {
+            Calculator calculator = new Calculator();
+            String value = scanner.nextLine();
+            String[] strings = calculator.enteringValue(value);
+            calculator.expression(strings);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void expression(String[] strings) {
@@ -21,14 +25,22 @@ public class Calculator {
         String answer = null;
         try {
             answer = withInt(firstNumb, operator, secondNumb);
-        } catch (Exception e) {
-            withString(firstNumb, operator, secondNumb);
         }
+        catch (Exception e){
+            answer = withString(firstNumb, operator, secondNumb);
+        }
+        System.out.println(answer);
     }
+
+    public String withString(String firstNum, String operator, String secondNum) {
+
+        return  null;
+    }
+
 
     public String withInt(String firstNum, String operator, String secondNum) {
         int numbOne = Integer.parseInt(firstNum);
-        int numbTwo = Integer.parseInt(firstNum);
+        int numbTwo = Integer.parseInt(secondNum);
         switch (operator) {
             case "+":
                 return String.valueOf(numbOne + numbTwo);
@@ -41,49 +53,32 @@ public class Calculator {
             default:
                 return null;
         }
-
-    }
-
-    public void withString(String firstNum, String operator, String secondNum) {
-        String answer = null;
-
     }
 
 
-    public int ppp(int firstNumb, String operator, int secondNumb) {
-        if (firstNumb == 0 || secondNumb == 0) {
-            return 0;
-        }
-        switch (operator) {
-            case "+":
-                return firstNumb + secondNumb;
-            case "-":
-                return firstNumb - secondNumb;
-            case "/":
-                return firstNumb / secondNumb;
-            case "*":
-                return firstNumb * secondNumb;
-            default:
-                return 0;
-        }
-    }
 
 
-    public String[] enteringValue(String value) {
+
+    public String[] enteringValue(String value) throws Exception{
         String[] strings = value.split(" ");
         checkArrayStrings(strings);
         return strings;
     }
 
-
-    public void checkArrayStrings(String[] strings) {
+    public void checkArrayStrings(String[] strings) throws Exception{
+        int firstNumb = 0;
+        int secondNumb = 0;
         try {
-            if (strings.length > 3) {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            firstNumb = Integer.parseInt(strings[0]);
+            secondNumb = Integer.parseInt(strings[2]);
+        }catch (Exception e){
+            throw new Exception();
         }
+
+        if (strings.length != 3 || firstNumb > 10 || secondNumb > 10) {
+            throw new Exception();
+        }
+
     }
 
 }
