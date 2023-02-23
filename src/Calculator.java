@@ -35,20 +35,24 @@ public class Calculator {
 
     public String withString(String firstNum, String operator, String secondNum) {
 
-        int numb1 = 0;
-        switch (firstNum){
-            case "I": numb1 = 1; break;
-            case "II": numb1 = 2; break;
-            case "III": numb1 = 3; break;
-            case "IV": numb1 = 4; break;
-            case "V": numb1 = 5; break;
-            case "VI": numb1 = 6; break;
-            case "VII": numb1 = 7; break;
-            case "VIII": numb1 = 8; break;
-            case "IX": numb1 = 9; break;
-            case "X": numb1 = 10; break;
+        int numb1 = numberConversion(firstNum);
+        int numb2 = numberConversion(secondNum);
+        return String.valueOf(numb1 + numb2);
+    }
+    public int numberConversion(String number){
+        switch (number){
+            case "I": return 1;
+            case "II": return 2;
+            case "III": return 3;
+            case "IV": return 4;
+            case "V": return 5;
+            case "VI": return 6;
+            case "VII": return 7;
+            case "VIII": return 8;
+            case "IX": return 9;
+            case "X": return 10;
+            default: return 0;
         }
-        return String.valueOf(numb1);
     }
 
 
