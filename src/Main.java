@@ -3,13 +3,15 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        String result = "1 + 2";
-//        result = "VI / III";
-//        result = "I - II";
-//        result = "I + 1";
-//        result = "1";
-//        result = "1 + 2 + 3";
-        System.out.println(Main.calc(result));
+
+        Scanner scanner = new Scanner(System.in);
+        String inputLine = scanner.nextLine();
+        String result = Main.calc(inputLine);
+        Main.printResult(result);
+    }
+
+    public static void printResult(String result){
+        System.out.println(result);
     }
 
     public static String calc(String input) throws Exception {
